@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Admin Login Callback | The Capstone Program">
+  <section class="mx-auto max-w-3xl px-4 py-20">
+    <h1 class="text-3xl font-bold text-capBlack">Finishing sign-in…</h1>
+    <p class="mt-3 text-black/70">
+      Please wait, redirecting to the admin panel.
+    </p>
+  </section>
+
+  <script>
+    // Netlify Identity handles invite / recovery tokens on this page
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+        window.netlifyIdentity.on("signup", () => {
+          document.location.href = "/admin/";
+        });
+      });
+    }
+
+    // fallback: if identity doesn't initialize quickly
+    setTimeout(() => {
+      document.location.href = "/admin/";
+    }, 2500);
+  </script>
+</BaseLayout>

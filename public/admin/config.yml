@@ -2,11 +2,15 @@ backend:
   name: git-gateway
   branch: main
 
+# ✅ IMPORTANT: set your real Netlify domain here (NOT localhost)
+site_url: https://charming-semifreddo-4f5a83.netlify.app
+display_url: https://charming-semifreddo-4f5a83.netlify.app
+
+# ✅ Optional but recommended
+logo_url: https://charming-semifreddo-4f5a83.netlify.app/images/logo.png
+
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
-
-site_url: http://localhost:4322
-display_url: http://localhost:4322
 
 collections:
   - name: "faq"
