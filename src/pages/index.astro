@@ -1,0 +1,235 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getSettings } from "../lib/settings";
+const s = getSettings();
+---
+
+<BaseLayout title="The Capstone Program">
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-capBlack text-white">
+    <!-- Subtle premium blue glow -->
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-capBlue/25 blur-[120px]"></div>
+      <div class="absolute -bottom-40 right-0 h-[520px] w-[520px] rounded-full bg-capBlue/10 blur-[120px]"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-6xl px-4 py-20 md:py-28">
+      <p class="text-xs font-semibold tracking-wider text-white/70 uppercase">
+        Youth-led career access + mentorship initiative
+      </p>
+
+      <h1 class="mt-5 text-4xl font-semibold leading-tight md:text-6xl">
+        The Capstone Program
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-base md:text-lg text-white/80">
+        A fully online career access and mentorship program helping university students across Pakistan
+        understand the hidden systems of recruitment, networking, and early-career growth.
+      </p>
+
+      <p class="mt-3 text-white/70">
+        Talent is everywhere. Opportunity is not.
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a
+          href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
+          class="rounded-2xl bg-capBlue px-6 py-3 text-sm font-semibold text-white shadow hover:opacity-95"
+        >
+          {s.primaryCtaLabel}
+        </a>
+
+        <a
+          href="/program"
+          class="rounded-2xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10"
+        >
+          Learn More
+        </a>
+
+        <a
+          href="/contact"
+          class="rounded-2xl border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/5"
+        >
+          Partner With Us
+        </a>
+      </div>
+
+      <!-- trust indicators -->
+      <div class="mt-14 grid gap-4 md:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-7">
+          <p class="text-sm font-semibold">Fully online</p>
+          <p class="mt-2 text-sm text-white/70">
+            Designed to be accessible across Pakistan, regardless of city or campus.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-7">
+          <p class="text-sm font-semibold">Cohort-based</p>
+          <p class="mt-2 text-sm text-white/70">
+            Runs in structured cohorts so fellows build confidence through guided progress.
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-7">
+          <p class="text-sm font-semibold">Mentorship-led</p>
+          <p class="mt-2 text-sm text-white/70">
+            Feedback, check-ins, and real standards from people who have navigated these systems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS CAPSTONE -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-20">
+      <div class="grid gap-10 md:grid-cols-2 md:items-center">
+        <div>
+          <p class="text-xs font-semibold tracking-wider text-black/60 uppercase">
+            What it is
+          </p>
+          <h2 class="mt-4 text-3xl font-semibold md:text-4xl text-capBlack">
+            Not a one-time webinar
+          </h2>
+          <p class="mt-5 text-sm md:text-base text-black/70 leading-relaxed">
+            The Capstone Program is a structured four-week fellowship experience designed to give students
+            professional literacy: how recruitment works, what elite career tracks expect, and how to prepare
+            with clarity and dignity.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="/program"
+              class="rounded-2xl bg-capBlack px-6 py-3 text-sm font-semibold text-white hover:opacity-95"
+            >
+              Explore the Program
+            </a>
+            <a
+              href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
+              class="rounded-2xl border border-black/15 px-6 py-3 text-sm font-semibold text-capBlack hover:bg-black/5"
+            >
+              Join Waitlist
+            </a>
+          </div>
+        </div>
+
+        <!-- visual card -->
+        <div class="rounded-3xl border border-black/10 bg-capGray p-10">
+          <p class="text-sm font-semibold text-capBlack">The problem Capstone solves</p>
+
+          <div class="mt-6 space-y-4">
+            <div class="rounded-2xl border border-black/10 bg-white p-6">
+              <p class="text-sm font-semibold text-capBlack">Inequality of exposure</p>
+              <p class="mt-2 text-sm text-black/70">
+                Many students never get access to guidance, networks, and the unspoken rules.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 bg-white p-6">
+              <p class="text-sm font-semibold text-capBlack">Hidden recruitment systems</p>
+              <p class="mt-2 text-sm text-black/70">
+                CV screening, internship cycles, networking, and interviews often reward familiarity, not talent.
+              </p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 bg-white p-6">
+              <p class="text-sm font-semibold text-capBlack">Confidence gap</p>
+              <p class="mt-2 text-sm text-black/70">
+                Rejection feels personal when students do not know what they are missing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM STRUCTURE -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-4 pb-20">
+      <div class="rounded-3xl border border-black/10 bg-white p-10 md:p-14">
+        <div class="grid gap-10 md:grid-cols-2 md:items-start">
+          <div>
+            <p class="text-xs font-semibold tracking-wider text-black/60 uppercase">
+              Program structure
+            </p>
+            <h2 class="mt-4 text-3xl font-semibold md:text-4xl text-capBlack">
+              Four-week fellowship journey
+            </h2>
+            <p class="mt-5 text-sm md:text-base text-black/70 leading-relaxed">
+              Fellows move through curated sessions, practical assignments, mentorship check-ins,
+              and community learning. The focus is not motivation. It is preparation.
+            </p>
+          </div>
+
+          <div class="grid gap-4">
+            <div class="rounded-2xl border border-black/10 bg-capGray p-6">
+              <p class="text-sm font-semibold text-capBlack">Week 1</p>
+              <p class="mt-2 text-sm text-black/70">Career clarity + industry pathways</p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 bg-capGray p-6">
+              <p class="text-sm font-semibold text-capBlack">Week 2</p>
+              <p class="mt-2 text-sm text-black/70">Resume + LinkedIn standards</p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 bg-capGray p-6">
+              <p class="text-sm font-semibold text-capBlack">Week 3</p>
+              <p class="mt-2 text-sm text-black/70">Networking + professional communication</p>
+            </div>
+
+            <div class="rounded-2xl border border-black/10 bg-capGray p-6">
+              <p class="text-sm font-semibold text-capBlack">Week 4</p>
+              <p class="mt-2 text-sm text-black/70">Interview prep + mentorship feedback</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a
+            href="/cohorts"
+            class="rounded-2xl bg-capBlue px-6 py-3 text-sm font-semibold text-white shadow hover:opacity-95"
+          >
+            View Cohorts & Timeline
+          </a>
+          <a
+            href="/faq"
+            class="rounded-2xl border border-black/15 px-6 py-3 text-sm font-semibold text-capBlack hover:bg-black/5"
+          >
+            Read FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BOTTOM -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-4 pb-20">
+      <div class="rounded-3xl bg-capBlack p-12 text-white">
+        <h3 class="text-2xl md:text-3xl font-semibold">
+          Join the community before applications open
+        </h3>
+        <p class="mt-4 max-w-2xl text-sm md:text-base text-white/80">
+          If you believe in fairness, dignity, and real professional literacy, we would love to have you with us.
+          Join the waitlist to receive cohort announcements and updates.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
+            class="rounded-2xl bg-capBlue px-6 py-3 text-sm font-semibold text-white shadow hover:opacity-95"
+          >
+            Join Waitlist
+          </a>
+          <a
+            href="/updates"
+            class="rounded-2xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10"
+          >
+            View Updates
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

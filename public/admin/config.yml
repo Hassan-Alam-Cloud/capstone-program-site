@@ -1,0 +1,66 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+site_url: http://localhost:4322
+display_url: http://localhost:4322
+
+collections:
+  - name: "faq"
+    label: "FAQs"
+    folder: "src/content/faq"
+    create: true
+    slug: "faq-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text" }
+
+  - name: "updates"
+    label: "Updates / Announcements"
+    folder: "src/content/updates"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Tag", name: "tag", widget: "string", required: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "mentors"
+    label: "Mentors"
+    folder: "src/content/mentors"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role / Position", name: "role", widget: "string", required: false }
+      - { label: "Company / Organization", name: "org", widget: "string", required: false }
+      - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
+      - { label: "Tags (comma separated)", name: "tags", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "cohorts"
+    label: "Cohorts"
+    folder: "src/content/cohorts"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Cohort Name", name: "title", widget: "string" }
+      - { label: "Status", name: "status", widget: "select", options: ["Upcoming", "Open", "Closed"], default: "Upcoming" }
+      - { label: "Applications Open Date", name: "open_date", widget: "datetime", required: false }
+      - { label: "Applications Close Date", name: "close_date", widget: "datetime", required: false }
+      - { label: "Eligibility", name: "eligibility", widget: "text", required: false }
+      - { label: "How to apply", name: "apply_instructions", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }

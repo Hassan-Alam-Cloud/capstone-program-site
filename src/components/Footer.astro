@@ -1,0 +1,15 @@
+---
+import { getSettings } from "../lib/settings";
+const s = getSettings();
+---
+
+<footer class="border-t border-black/10 bg-white">
+  <div class="mx-auto max-w-6xl px-4 py-10">
+    <p class="text-sm text-black/70">
+      © {new Date().getFullYear()} {s.programName}
+    </p>
+    <p class="mt-2 text-sm text-black/70">
+      Email: <a class="text-capBlue font-semibold" href={`mailto:${s.email}`}>{s.email}</a>
+    </p>
+  </div>
+</footer>

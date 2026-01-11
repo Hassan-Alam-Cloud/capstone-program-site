@@ -1,0 +1,105 @@
+---
+import { getSettings } from "../lib/settings";
+const s = getSettings();
+
+const navLinks = [
+  { label: "Program", href: "/program" },
+  { label: "Cohorts", href: "/cohorts" },
+  { label: "Mentors", href: "/mentors" },
+  { label: "Updates", href: "/updates" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
+];
+
+const currentPath = Astro.url?.pathname ?? "/";
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+---
+
+<header class="sticky top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <!-- Logo / Name -->
+    <a href="/" class="flex items-center gap-3">
+      <span class="text-sm font-semibold text-capBlack tracking-tight">
+        {s.programName}
+      </span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-2 md:flex">
+      {
+        navLinks.map((item) => (
+          <a
+            href={item.href}
+            class={`rounded-lg px-3 py-2 text-sm font-medium transition ${
+              isActive(item.href)
+                ? "bg-black/5 text-capBlack"
+                : "text-black/60 hover:bg-black/5 hover:text-capBlack"
+            }`}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Right section -->
+    <div class="flex items-center gap-3">
+      <!-- CTA -->
+      <a
+        href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
+        class="hidden rounded-xl bg-capBlue px-4 py-2 text-sm font-semibold text-white shadow hover:opacity-95 md:inline-flex"
+      >
+        {s.primaryCtaLabel}
+      </a>
+
+      <!-- Mobile menu button -->
+      <button
+        id="menuBtn"
+        class="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-3 py-2 text-sm font-semibold text-capBlack shadow-sm hover:bg-black/5 md:hidden"
+        aria-label="Open Menu"
+        type="button"
+      >
+        Menu
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu panel -->
+  <div id="mobileMenu" class="hidden border-t border-black/10 bg-white/95 md:hidden">
+    <div class="mx-auto max-w-6xl px-4 py-4">
+      <div class="flex flex-col gap-2">
+        {
+          navLinks.map((item) => (
+            <a
+              href={item.href}
+              class={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                isActive(item.href)
+                  ? "bg-black/5 text-capBlack"
+                  : "text-black/70 hover:bg-black/5 hover:text-capBlack"
+              }`}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+
+        <a
+          href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
+          class="mt-2 rounded-xl bg-capBlue px-4 py-3 text-center text-sm font-semibold text-white shadow hover:opacity-95"
+        >
+          {s.primaryCtaLabel}
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById("menuBtn");
+  const menu = document.getElementById("mobileMenu");
+
+  btn?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+  });
+</script>
