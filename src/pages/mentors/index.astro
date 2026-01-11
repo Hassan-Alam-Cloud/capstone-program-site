@@ -1,167 +1,109 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getSettings } from "../../lib/settings";
 import { getCollection } from "astro:content";
 
-const s = getSettings();
-
-// ✅ Fetch mentors from CMS markdown
 const mentors = await getCollection("mentors");
 
-// ✅ Sort mentors A-Z
-const sorted = mentors
-  .filter((m) => m.data?.name)
-  .sort((a, b) => String(a.data.name).localeCompare(String(b.data.name)));
+const sorted = mentors.sort((a, b) => {
+  const an = (a.data?.name ?? "").toLowerCase();
+  const bn = (b.data?.name ?? "").toLowerCase();
+  return an.localeCompare(bn);
+});
 ---
 
 <BaseLayout title="Mentors | The Capstone Program">
-  <!-- Premium Hero -->
   <section class="relative bg-capBlack text-white overflow-hidden">
-    <!-- Blue premium glow -->
     <div class="pointer-events-none absolute -top-40 -left-40 h-[480px] w-[480px] rounded-full bg-capBlue/25 blur-3xl"></div>
     <div class="pointer-events-none absolute -bottom-44 -right-40 h-[520px] w-[520px] rounded-full bg-capBlue/15 blur-3xl"></div>
 
-    <!-- Bottom fade -->
-    <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-black/10 to-white/5"></div>
-
-    <div class="mx-auto max-w-6xl px-4 pt-16 pb-36 md:pt-20 md:pb-44">
+    <div class="mx-auto max-w-6xl px-4 pt-16 pb-20 md:pt-20 md:pb-24">
       <p class="text-[11px] font-semibold tracking-[0.22em] text-white/60 uppercase">
         Mentors
       </p>
 
       <h1 class="mt-4 text-4xl font-semibold leading-tight md:text-6xl md:leading-tight">
-        Learn from those who’ve done it
+        Featured mentors
       </h1>
 
       <p class="mt-5 max-w-3xl text-sm md:text-base text-white/80 leading-relaxed">
-        Our mentors have navigated competitive internships, scholarships, interviews, and early career systems —
-        and now guide fellows with real standards, clarity, and honesty.
+        Mentors are added from the Admin panel. This page updates automatically when you publish.
       </p>
-
-      <div class="mt-10 flex flex-wrap gap-3">
-        <a
-          href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
-          class="rounded-2xl bg-capBlue px-6 py-3 text-sm font-semibold text-white shadow hover:opacity-95"
-        >
-          Join Waitlist
-        </a>
-
-        <a
-          href="/program"
-          class="rounded-2xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10"
-        >
-          Explore Program
-        </a>
-      </div>
     </div>
   </section>
 
-  <!-- Content -->
   <section class="mx-auto max-w-6xl px-4 py-14 md:py-20">
-    <div class="flex items-end justify-between gap-4">
-      <div>
-        <h2 class="text-2xl font-semibold md:text-3xl">Featured Mentors</h2>
-        <p class="mt-2 text-sm text-capText/70 max-w-2xl">
-          This list grows automatically when you publish new mentors in the Admin panel.
-        </p>
-      </div>
+    {sorted.length > 0 ? (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {sorted.map((m) => {
+          const tags =
+            typeof m.data.tags === "string" && m.data.tags.trim().length > 0
+              ? m.data.tags.split(",").map((t) => t.trim()).filter(Boolean)
+              : [];
 
-      <a
-        href="/updates/"
-        class="hidden md:inline-flex rounded-2xl border border-black/10 bg-white px-5 py-3 text-sm font-semibold hover:bg-black/5"
-      >
-        View Updates
-      </a>
-    </div>
+          return (
+            <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm hover:shadow-md transition">
+              <div class="flex items-start gap-4">
+                <div class="h-12 w-12 rounded-2xl bg-capBlue/10 flex items-center justify-center">
+                  <span class="text-sm font-bold text-capBlue">
+                    {(m.data.name ?? "M").slice(0, 1).toUpperCase()}
+                  </span>
+                </div>
 
-    <!-- ✅ Dynamic Mentors Grid -->
-    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {sorted.length > 0 ? (
-        sorted.map((m) => (
-          <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm hover:shadow-md transition">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <h3 class="text-lg font-semibold text-capBlack">{m.data.name}</h3>
+                <div class="flex-1">
+                  <h3 class="text-lg font-semibold text-capBlack">
+                    {m.data.name}
+                  </h3>
 
-                {(m.data.role || m.data.org) && (
-                  <p class="mt-1 text-sm text-black/60">
-                    {m.data.role ? m.data.role : ""}{m.data.role && m.data.org ? " · " : ""}{m.data.org ? m.data.org : ""}
-                  </p>
-                )}
+                  {(m.data.role || m.data.org) && (
+                    <p class="mt-1 text-sm text-capText/70">
+                      {m.data.role ? m.data.role : ""}
+                      {m.data.role && m.data.org ? " · " : ""}
+                      {m.data.org ? m.data.org : ""}
+                    </p>
+                  )}
+                </div>
               </div>
 
-              {m.data.linkedin && (
-                <a
-                  href={m.data.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  class="rounded-xl border border-black/10 bg-white px-3 py-2 text-xs font-semibold hover:bg-black/5"
-                >
-                  LinkedIn
-                </a>
-              )}
-            </div>
-
-            {m.data.tags && (
-              <div class="mt-4 flex flex-wrap gap-2">
-                {String(m.data.tags)
-                  .split(",")
-                  .map((t) => t.trim())
-                  .filter(Boolean)
-                  .slice(0, 4)
-                  .map((tag) => (
-                    <span class="rounded-full bg-black/5 px-3 py-1 text-xs font-semibold text-black/70">
-                      {tag}
+              {tags.length > 0 && (
+                <div class="mt-5 flex flex-wrap gap-2">
+                  {tags.slice(0, 6).map((t) => (
+                    <span class="rounded-full bg-black/5 px-3 py-1 text-[11px] font-semibold text-black/70">
+                      {t}
                     </span>
                   ))}
+                </div>
+              )}
+
+              <div class="mt-6 flex items-center justify-between">
+                <span class="text-xs font-semibold text-capText/60">
+                  Capstone Mentor
+                </span>
+
+                {m.data.linkedin ? (
+                  <a
+                    href={m.data.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="rounded-xl border border-black/10 bg-white px-4 py-2 text-xs font-semibold hover:bg-black/5"
+                  >
+                    LinkedIn
+                  </a>
+                ) : (
+                  <span class="text-xs text-black/30">No LinkedIn</span>
+                )}
               </div>
-            )}
-
-            <div class="mt-6 border-t border-black/5 pt-5">
-              <p class="text-xs text-black/50">
-                Published via Admin Panel
-              </p>
-            </div>
-          </article>
-        ))
-      ) : (
-        <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm">
-          <h3 class="text-xl font-semibold">No mentors published yet</h3>
-          <p class="mt-2 text-sm text-capText/70 leading-relaxed">
-            Go to the Admin panel and publish your first mentor profile.
-          </p>
-        </article>
-      )}
-    </div>
-
-    <!-- Premium CTA -->
-    <div class="mt-14 rounded-[32px] bg-capBlack text-white overflow-hidden relative">
-      <div class="pointer-events-none absolute -top-24 -right-16 h-[280px] w-[280px] rounded-full bg-capBlue/20 blur-3xl"></div>
-
-      <div class="px-8 py-12 md:px-12 md:py-14">
-        <h3 class="text-2xl font-semibold md:text-3xl">
-          Want to mentor Capstone fellows?
-        </h3>
-        <p class="mt-2 max-w-2xl text-sm md:text-base text-white/75 leading-relaxed">
-          If you believe in mentoring with dignity, standards, and honesty — we’d love to hear from you.
-        </p>
-
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a
-            href="/contact/"
-            class="rounded-2xl bg-capBlue px-6 py-3 text-sm font-semibold text-white shadow hover:opacity-95"
-          >
-            Partner With Us
-          </a>
-          <a
-            href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
-            class="rounded-2xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10"
-          >
-            Join Waitlist
-          </a>
-        </div>
+            </article>
+          );
+        })}
       </div>
-    </div>
+    ) : (
+      <div class="rounded-3xl border border-black/10 bg-white p-10 text-center">
+        <h2 class="text-xl font-semibold">No mentors published yet</h2>
+        <p class="mt-2 text-sm text-black/60">
+          Go to <span class="font-semibold">/admin</span> and publish your first mentor.
+        </p>
+      </div>
+    )}
   </section>
 </BaseLayout>
 
