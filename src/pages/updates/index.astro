@@ -1,7 +1,17 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getSettings } from "../../lib/settings";
+import { getCollection } from "astro:content";
+
 const s = getSettings();
+
+// ✅ Fetch all updates from Decap (markdown files)
+const updates = await getCollection("updates");
+
+// ✅ Sort by latest date (newest first)
+const sorted = updates
+  .filter((u) => u.data?.date)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
 <BaseLayout title="Updates | The Capstone Program">
@@ -51,55 +61,60 @@ const s = getSettings();
       <div>
         <h2 class="text-2xl font-semibold md:text-3xl">Latest</h2>
         <p class="mt-2 text-sm text-capText/70 max-w-2xl">
-          This section will grow over time as we share cohort openings, webinars, and opportunities.
+          This section grows automatically when you publish new updates in the Admin panel.
         </p>
       </div>
     </div>
 
+    <!-- ✅ Dynamic Updates Grid -->
     <div class="mt-10 grid gap-6 md:grid-cols-2">
-      <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm">
-        <div class="flex items-center justify-between">
-          <p class="text-xs font-semibold tracking-wider text-capText/60 uppercase">Cohorts</p>
-          <span class="text-xs font-medium text-capText/40">TBD</span>
-        </div>
+      {sorted.length > 0 ? (
+        sorted.map((u) => (
+          <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-xs font-semibold tracking-wider text-capText/60 uppercase">
+                {u.data.tag ?? "Update"}
+              </p>
+              <span class="text-xs font-medium text-capText/40">
+                {new Date(u.data.date).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
 
-        <h3 class="mt-4 text-xl font-semibold">Cohort announcements coming soon</h3>
-        <p class="mt-2 text-sm text-capText/70 leading-relaxed">
-          We will share cohort dates, deadlines, eligibility details, and selection criteria soon.
-        </p>
+            <h3 class="mt-4 text-xl font-semibold">{u.data.title}</h3>
 
-        <div class="mt-6 flex items-center justify-between">
-          <p class="text-xs font-semibold text-capText/60">The Capstone Program</p>
-          <a
-            href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
-            class="rounded-xl border border-black/10 bg-white px-4 py-2 text-xs font-semibold hover:bg-black/5"
-          >
-            Stay Updated
-          </a>
-        </div>
-      </article>
+            {u.data.summary ? (
+              <p class="mt-2 text-sm text-capText/70 leading-relaxed">
+                {u.data.summary}
+              </p>
+            ) : (
+              <p class="mt-2 text-sm text-capText/50 leading-relaxed">
+                No summary provided.
+              </p>
+            )}
 
-      <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm">
-        <div class="flex items-center justify-between">
-          <p class="text-xs font-semibold tracking-wider text-capText/60 uppercase">Community</p>
-          <span class="text-xs font-medium text-capText/40">TBD</span>
-        </div>
-
-        <h3 class="mt-4 text-xl font-semibold">Webinars and community updates</h3>
-        <p class="mt-2 text-sm text-capText/70 leading-relaxed">
-          Outside cohorts, we stay engaged through webinars, opportunities, and announcements.
-        </p>
-
-        <div class="mt-6 flex items-center justify-between">
-          <p class="text-xs font-semibold text-capText/60">The Capstone Program</p>
-          <a
-            href={s.waitlist === "WAITLIST_FORM_URL_TBD" ? "/apply" : s.waitlist}
-            class="rounded-xl border border-black/10 bg-white px-4 py-2 text-xs font-semibold hover:bg-black/5"
-          >
-            Stay Updated
-          </a>
-        </div>
-      </article>
+            <div class="mt-6 flex items-center justify-between">
+              <p class="text-xs font-semibold text-capText/60">The Capstone Program</p>
+              <a
+                href={"/updates/" + u.slug + "/"}
+                class="rounded-xl border border-black/10 bg-white px-4 py-2 text-xs font-semibold hover:bg-black/5"
+              >
+                Read More
+              </a>
+            </div>
+          </article>
+        ))
+      ) : (
+        <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm">
+          <h3 class="text-xl font-semibold">No updates published yet</h3>
+          <p class="mt-2 text-sm text-capText/70 leading-relaxed">
+            Go to the Admin panel and publish your first update.
+          </p>
+        </article>
+      )}
     </div>
 
     <div class="mt-14 rounded-[32px] bg-capBlack text-white overflow-hidden relative">
@@ -131,7 +146,6 @@ const s = getSettings();
     </div>
   </section>
 </BaseLayout>
-
 
 
 
