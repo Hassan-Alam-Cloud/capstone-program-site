@@ -6,12 +6,6 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
-# Your Cloudflare Pages URL will go here later (after deployment)
-# For now these are not important for the CMS to work locally
-site_url: http://localhost:4323
-display_url: http://localhost:4323
-logo_url: /images/logo.png
-
 collections:
   - name: "faq"
     label: "FAQs"
