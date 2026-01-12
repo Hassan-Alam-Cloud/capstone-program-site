@@ -1,14 +1,16 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
-# IMPORTANT: your real Netlify domain
-site_url: https://charming-semifreddo-4f5a83.netlify.app
-display_url: https://charming-semifreddo-4f5a83.netlify.app
-logo_url: https://charming-semifreddo-4f5a83.netlify.app/images/logo.png
+# Your Cloudflare Pages URL will go here later (after deployment)
+# For now these are not important for the CMS to work locally
+site_url: http://localhost:4323
+display_url: http://localhost:4323
+logo_url: /images/logo.png
 
 collections:
   - name: "faq"
