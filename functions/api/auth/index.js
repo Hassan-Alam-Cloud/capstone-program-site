@@ -9,7 +9,6 @@ export async function onRequestGet(context) {
     });
   }
 
-  // Redirect back to this site callback
   const redirectUri = `${url.origin}/api/auth/callback`;
 
   const githubAuthUrl =

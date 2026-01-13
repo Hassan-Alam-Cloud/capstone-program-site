@@ -2,6 +2,7 @@ export async function onRequestGet(context) {
   const url = new URL(context.request.url);
 
   const code = url.searchParams.get("code");
+
   if (!code) {
     return new Response("Missing ?code from GitHub callback", { status: 400 });
   }
@@ -13,7 +14,6 @@ export async function onRequestGet(context) {
     return new Response("Missing GitHub OAuth env vars", { status: 500 });
   }
 
-  // Exchange code → access token
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -38,8 +38,6 @@ export async function onRequestGet(context) {
 
   const token = tokenData.access_token;
 
-  // Decap expects the token to be sent back to /admin/ in hash format
-  // This is the correct format Decap understands.
   const redirectToAdmin = `${url.origin}/admin/#access_token=${token}&token_type=bearer`;
 
   return Response.redirect(redirectToAdmin, 302);
