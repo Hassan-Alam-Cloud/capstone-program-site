@@ -7,7 +7,19 @@
 
     <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <!-- Required: tell Decap NOT to auto-init -->
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
   </head>
 
-  <body></body>
+  <body>
+    <!-- REQUIRED mount point -->
+    <div id="nc-root"></div>
+
+    <script>
+      window.CMS.init();
+    </script>
+  </body>
 </html>
