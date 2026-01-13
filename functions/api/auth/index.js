@@ -1,21 +1,22 @@
-export async function onRequestGet(context) {
-  const url = new URL(context.request.url);
+export async function onRequest(context) {
+  const { env, request } = context;
 
-  const clientId = context.env.GITHUB_CLIENT_ID;
+  const url = new URL(request.url);
 
-  if (!clientId) {
-    return new Response("Missing GITHUB_CLIENT_ID in Cloudflare env vars", {
-      status: 500,
-    });
-  }
+  const client_id = env.GITHUB_CLIENT_ID;
+  const redirect_uri = `${url.origin}/api/auth/callback`;
 
-  const redirectUri = `${url.origin}/api/auth/callback`;
+  // ✅ this is where GitHub sends user back after login
+  const scope = "repo";
+  const state = crypto.randomUUID();
 
   const githubAuthUrl =
-    "https://github.com/login/oauth/authorize" +
-    `?client_id=${encodeURIComponent(clientId)}` +
-    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-    `&scope=${encodeURIComponent("repo")}`;
+    `https://github.com/login/oauth/authorize?` +
+    `client_id=${encodeURIComponent(client_id)}` +
+    `&redirect_uri=${encodeURIComponent(redirect_uri)}` +
+    `&scope=${encodeURIComponent(scope)}` +
+    `&state=${encodeURIComponent(state)}`;
 
+  // ✅ IMPORTANT: must redirect (NOT return plain text)
   return Response.redirect(githubAuthUrl, 302);
 }
