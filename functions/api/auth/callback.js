@@ -16,6 +16,7 @@ export async function onRequestGet(context) {
     );
   }
 
+  // Exchange OAuth code for token
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -34,13 +35,18 @@ export async function onRequestGet(context) {
 
   if (!tokenData.access_token) {
     return new Response(
-      `Failed to get access_token from GitHub.\n\n${JSON.stringify(tokenData, null, 2)}`,
+      `Failed to get access_token from GitHub.\n\n${JSON.stringify(
+        tokenData,
+        null,
+        2
+      )}`,
       { status: 500 }
     );
   }
 
   const token = tokenData.access_token;
 
+  // ✅ IMPORTANT: Decap expects token in hash fragment
   const redirectUrl =
     `${url.origin}/admin/#/access_token=${encodeURIComponent(token)}` +
     `&token_type=bearer` +
