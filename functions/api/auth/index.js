@@ -1,12 +1,16 @@
 export async function onRequestGet(context) {
-  const requestUrl = new URL(context.request.url);
+  const url = new URL(context.request.url);
 
   const clientId = context.env.GITHUB_CLIENT_ID;
+
   if (!clientId) {
-    return new Response("Missing env GITHUB_CLIENT_ID", { status: 500 });
+    return new Response("Missing GITHUB_CLIENT_ID in Cloudflare env vars", {
+      status: 500,
+    });
   }
 
-  const redirectUri = `${requestUrl.origin}/api/auth/callback`;
+  // Redirect back to this site callback
+  const redirectUri = `${url.origin}/api/auth/callback`;
 
   const githubAuthUrl =
     "https://github.com/login/oauth/authorize" +
