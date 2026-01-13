@@ -3,20 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Content Manager</title>
+    <title>Admin | The Capstone Program</title>
   </head>
 
   <body>
-    <!-- REQUIRED mount element for Decap -->
+    <!-- IMPORTANT: Decap expects this exact mount element -->
     <div id="nc-root"></div>
 
-    <!-- Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- Load Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@3.10.0/dist/decap-cms.js"></script>
 
-    <!-- Tell Decap where to mount -->
-    <script>
-      window.CMS_MANUAL_INIT = true;
-      CMS.init({ config: "/admin/config.yml" });
-    </script>
+    <!-- Let Decap auto-initialize -->
   </body>
 </html>
