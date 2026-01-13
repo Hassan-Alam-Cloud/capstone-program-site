@@ -2,9 +2,6 @@ backend:
   name: github
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
-  auth_scope: repo
-  base_url: https://the-capstone-program.pages.dev
-  auth_endpoint: api/auth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
