@@ -7,12 +7,16 @@
   </head>
 
   <body>
-    <!-- IMPORTANT: Decap expects this exact mount element -->
+    <!-- Required mount element -->
     <div id="nc-root"></div>
 
-    <!-- Load Decap CMS -->
+    <!-- Load Decap -->
     <script src="https://unpkg.com/decap-cms@3.10.0/dist/decap-cms.js"></script>
 
-    <!-- Let Decap auto-initialize -->
+    <!-- Manual Init (prevents the Decap auto-mount crash) -->
+    <script>
+      window.CMS_MANUAL_INIT = true;
+      CMS.init({ config: "/admin/config.yml" });
+    </script>
   </body>
 </html>
