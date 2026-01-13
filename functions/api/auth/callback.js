@@ -10,9 +10,13 @@ export async function onRequestGet(context) {
   const clientSecret = context.env.GITHUB_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    return new Response("Missing env vars", { status: 500 });
+    return new Response(
+      "Missing env vars GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET",
+      { status: 500 }
+    );
   }
 
+  // Exchange code for access token
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -30,14 +34,19 @@ export async function onRequestGet(context) {
   const tokenData = await tokenRes.json();
 
   if (!tokenData.access_token) {
-    return new Response(JSON.stringify(tokenData, null, 2), { status: 500 });
+    return new Response(
+      `Failed to get access_token from GitHub.\n\n${JSON.stringify(tokenData, null, 2)}`,
+      { status: 500 }
+    );
   }
 
   const token = tokenData.access_token;
 
-  // ✅ THE ONLY CORRECT REDIRECT:
+  // ✅ FINAL FIX:
+  // Since YOUR Decap is running in "#/" router mode,
+  // token MUST be after "#/"
   const redirectUrl =
-    `${url.origin}/admin/#access_token=${encodeURIComponent(token)}&token_type=bearer`;
+    `${url.origin}/admin/#/access_token=${encodeURIComponent(token)}&token_type=bearer`;
 
   return Response.redirect(redirectUrl, 302);
 }
