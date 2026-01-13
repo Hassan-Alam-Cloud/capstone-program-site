@@ -4,22 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Content Manager</title>
+  </head>
+
+  <body>
+    <!-- REQUIRED mount element for Decap -->
+    <div id="nc-root"></div>
 
     <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
-    <!-- Required: tell Decap NOT to auto-init -->
+    <!-- Tell Decap where to mount -->
     <script>
       window.CMS_MANUAL_INIT = true;
-    </script>
-  </head>
-
-  <body>
-    <!-- REQUIRED mount point -->
-    <div id="nc-root"></div>
-
-    <script>
-      window.CMS.init();
+      CMS.init({ config: "/admin/config.yml" });
     </script>
   </body>
 </html>
