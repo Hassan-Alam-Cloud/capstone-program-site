@@ -3,7 +3,7 @@ export async function onRequestGet(context) {
   const code = url.searchParams.get("code");
 
   if (!code) {
-    return new Response("Missing ?code from GitHub", { status: 400 });
+    return new Response("Missing OAuth code", { status: 400 });
   }
 
   const clientId = context.env.GITHUB_CLIENT_ID;
@@ -35,18 +35,17 @@ export async function onRequestGet(context) {
 
   if (!tokenData.access_token) {
     return new Response(
-      `Failed to get access_token from GitHub.\n\n${JSON.stringify(tokenData, null, 2)}`,
+      `Failed to get access_token.\n\n${JSON.stringify(tokenData, null, 2)}`,
       { status: 500 }
     );
   }
 
   const token = tokenData.access_token;
 
-  // ✅ FINAL FIX:
-  // Since YOUR Decap is running in "#/" router mode,
-  // token MUST be after "#/"
+  // ✅ CRITICAL:
+  // For Decap with hash router, it MUST be "#/access_token="
   const redirectUrl =
-    `${url.origin}/admin/#/access_token=${encodeURIComponent(token)}&token_type=bearer`;
+    `${url.origin}/admin/#/access_token=${encodeURIComponent(token)}&token_type=bearer&provider=github`;
 
   return Response.redirect(redirectUrl, 302);
 }

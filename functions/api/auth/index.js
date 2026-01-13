@@ -1,22 +1,24 @@
-export async function onRequest(context) {
-  const { env, request } = context;
+export async function onRequestGet(context) {
+  const url = new URL(context.request.url);
 
-  const url = new URL(request.url);
+  const clientId = context.env.GITHUB_CLIENT_ID;
+  if (!clientId) {
+    return new Response("Missing GITHUB_CLIENT_ID", { status: 500 });
+  }
 
-  const client_id = env.GITHUB_CLIENT_ID;
-  const redirect_uri = `${url.origin}/api/auth/callback`;
+  // GitHub must redirect here
+  const redirectUri = `${url.origin}/api/auth/callback`;
 
-  // ✅ this is where GitHub sends user back after login
-  const scope = "repo";
+  // IMPORTANT: use public_repo to avoid rate limits
+  const scope = "public_repo";
   const state = crypto.randomUUID();
 
   const githubAuthUrl =
-    `https://github.com/login/oauth/authorize?` +
-    `client_id=${encodeURIComponent(client_id)}` +
-    `&redirect_uri=${encodeURIComponent(redirect_uri)}` +
+    "https://github.com/login/oauth/authorize" +
+    `?client_id=${encodeURIComponent(clientId)}` +
+    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
     `&scope=${encodeURIComponent(scope)}` +
     `&state=${encodeURIComponent(state)}`;
 
-  // ✅ IMPORTANT: must redirect (NOT return plain text)
   return Response.redirect(githubAuthUrl, 302);
 }

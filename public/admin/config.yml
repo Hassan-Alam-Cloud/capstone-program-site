@@ -1,23 +1,16 @@
+site_url: https://the-capstone-program.pages.dev
+display_url: https://the-capstone-program.pages.dev
+
 backend:
   name: github
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
-
-  # ✅ REQUIRED for GitHub OAuth App login
-  app_id: Ov23liP0Czu3COesrkXg
-
-  # ✅ IMPORTANT: do NOT use "repo" unless absolutely needed
-  # This reduces rate-limit + prevents loop
   auth_scope: public_repo
-
   base_url: https://the-capstone-program.pages.dev
   auth_endpoint: /api/auth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
-
-# ✅ CRITICAL: do NOT enable local backend on Cloudflare OAuth
-local_backend: false
 
 collections:
   - name: "updates"
