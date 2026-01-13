@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 
 const mentors = await getCollection("mentors");
 
+// ✅ Sort mentors alphabetically by name (safe even if name missing)
 const sorted = mentors.sort((a, b) => {
   const an = (a.data?.name ?? "").toLowerCase();
   const bn = (b.data?.name ?? "").toLowerCase();
@@ -12,6 +13,7 @@ const sorted = mentors.sort((a, b) => {
 ---
 
 <BaseLayout title="Mentors | The Capstone Program">
+  <!-- Premium Hero -->
   <section class="relative bg-capBlack text-white overflow-hidden">
     <div class="pointer-events-none absolute -top-40 -left-40 h-[480px] w-[480px] rounded-full bg-capBlue/25 blur-3xl"></div>
     <div class="pointer-events-none absolute -bottom-44 -right-40 h-[520px] w-[520px] rounded-full bg-capBlue/15 blur-3xl"></div>
@@ -31,10 +33,14 @@ const sorted = mentors.sort((a, b) => {
     </div>
   </section>
 
+  <!-- Mentors Grid -->
   <section class="mx-auto max-w-6xl px-4 py-14 md:py-20">
     {sorted.length > 0 ? (
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {sorted.map((m) => {
+          const name = m.data?.name ?? "Mentor";
+          const firstLetter = name.slice(0, 1).toUpperCase();
+
           const tags =
             typeof m.data.tags === "string" && m.data.tags.trim().length > 0
               ? m.data.tags.split(",").map((t) => t.trim()).filter(Boolean)
@@ -44,15 +50,11 @@ const sorted = mentors.sort((a, b) => {
             <article class="rounded-3xl border border-black/10 bg-white p-6 shadow-sm hover:shadow-md transition">
               <div class="flex items-start gap-4">
                 <div class="h-12 w-12 rounded-2xl bg-capBlue/10 flex items-center justify-center">
-                  <span class="text-sm font-bold text-capBlue">
-                    {(m.data.name ?? "M").slice(0, 1).toUpperCase()}
-                  </span>
+                  <span class="text-sm font-bold text-capBlue">{firstLetter}</span>
                 </div>
 
                 <div class="flex-1">
-                  <h3 class="text-lg font-semibold text-capBlack">
-                    {m.data.name}
-                  </h3>
+                  <h3 class="text-lg font-semibold text-capBlack">{name}</h3>
 
                   {(m.data.role || m.data.org) && (
                     <p class="mt-1 text-sm text-capText/70">

@@ -1,8 +1,9 @@
 ---
 name: Ali Abbas
 role: CEO
-org: Unilver Pakistan
+org: Unilever Pakistan
 linkedin: https://www.linkedin.com/in/hassanalam/
-tags: "#Guru "
+tags: "Guru"
 ---
-He is the king of a fictional company
+
+He is the king of a fictional company.
