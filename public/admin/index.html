@@ -2,24 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin | The Capstone Program</title>
   </head>
-
   <body>
     <div id="nc-root"></div>
 
-    <script>
-      // ✅ Fix decap sometimes reading wrong hash and looping
-      if (window.location.hash && window.location.hash.includes("access_token=")) {
-        // ensure /admin/#/ format always
-        if (!window.location.href.includes("/admin/#/")) {
-          const fixed = window.location.origin + "/admin/#/" + window.location.hash.replace("#", "");
-          window.location.replace(fixed);
-        }
-      }
-    </script>
-
-    <script src="https://unpkg.com/decap-cms@3.1.12/dist/decap-cms.js"></script>
+    <!-- ✅ Use THIS Decap build -->
+    <script src="https://unpkg.com/decap-cms@3.1.11/dist/decap-cms.js"></script>
   </body>
 </html>

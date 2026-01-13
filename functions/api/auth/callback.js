@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
   const url = new URL(context.request.url);
-
   const code = url.searchParams.get("code");
+
   if (!code) {
     return new Response("Missing OAuth code", { status: 400 });
   }
@@ -16,7 +16,6 @@ export async function onRequestGet(context) {
     );
   }
 
-  // Exchange OAuth code for token
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -35,22 +34,18 @@ export async function onRequestGet(context) {
 
   if (!tokenData.access_token) {
     return new Response(
-      `Failed to get access_token from GitHub.\n\n${JSON.stringify(tokenData, null, 2)}`,
+      `Failed to get access_token.\n\n${JSON.stringify(tokenData, null, 2)}`,
       { status: 500 }
     );
   }
 
   const token = tokenData.access_token;
 
-  /**
-   * ✅ CRITICAL:
-   * Decap lives at /admin/#/
-   * So token MUST be placed AFTER "#/"
-   */
-const redirectUrl =
-  `${url.origin}/admin/#/access_token=${encodeURIComponent(token)}` +
-  `&token_type=bearer`;
-return Response.redirect(redirectUrl, 302);
+  // ✅ FINAL FIX:
+  // Use "#access_token" (NOT "#/access_token")
+  const redirectUrl =
+    `${url.origin}/admin/#access_token=${encodeURIComponent(token)}` +
+    `&token_type=bearer`;
 
   return Response.redirect(redirectUrl, 302);
 }
