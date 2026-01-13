@@ -8,6 +8,18 @@
 
   <body>
     <div id="nc-root"></div>
-    <script src="https://unpkg.com/decap-cms@3.10.0/dist/decap-cms.js"></script>
+
+    <script>
+      // ✅ Fix decap sometimes reading wrong hash and looping
+      if (window.location.hash && window.location.hash.includes("access_token=")) {
+        // ensure /admin/#/ format always
+        if (!window.location.href.includes("/admin/#/")) {
+          const fixed = window.location.origin + "/admin/#/" + window.location.hash.replace("#", "");
+          window.location.replace(fixed);
+        }
+      }
+    </script>
+
+    <script src="https://unpkg.com/decap-cms@3.1.12/dist/decap-cms.js"></script>
   </body>
 </html>
