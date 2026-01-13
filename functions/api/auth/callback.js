@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
   const url = new URL(context.request.url);
-  const code = url.searchParams.get("code");
 
+  const code = url.searchParams.get("code");
   if (!code) {
     return new Response("Missing OAuth code", { status: 400 });
   }
@@ -34,18 +34,17 @@ export async function onRequestGet(context) {
 
   if (!tokenData.access_token) {
     return new Response(
-      `Failed to get access_token.\n\n${JSON.stringify(tokenData, null, 2)}`,
+      `Failed to get access_token from GitHub.\n\n${JSON.stringify(tokenData, null, 2)}`,
       { status: 500 }
     );
   }
 
   const token = tokenData.access_token;
 
-  // ✅ FINAL FIX:
-  // Use "#access_token" (NOT "#/access_token")
   const redirectUrl =
-    `${url.origin}/admin/#access_token=${encodeURIComponent(token)}` +
-    `&token_type=bearer`;
+    `${url.origin}/admin/#/access_token=${encodeURIComponent(token)}` +
+    `&token_type=bearer` +
+    `&provider=github`;
 
   return Response.redirect(redirectUrl, 302);
 }
