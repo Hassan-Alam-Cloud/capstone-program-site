@@ -1,13 +1,10 @@
-site_url: https://the-capstone-program.pages.dev
-display_url: https://the-capstone-program.pages.dev
-
 backend:
   name: github
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
 
-  # ✅ Use token auth instead of OAuth
-  auth_type: implicit
+# ✅ Token auth mode (kills OAuth loop permanently)
+local_backend: false
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
