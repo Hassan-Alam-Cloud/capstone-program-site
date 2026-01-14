@@ -1,2 +1,9 @@
-/admin  /admin/index.html  200
-/admin/ /admin/index.html  200
+# Always protect Cloudflare Access path (no changes here)
+# (Cloudflare Access rules are separate - this file is only routing)
+
+# ✅ Do NOT force all routes to homepage unless you want SPA behavior
+
+# If you have custom rewrites, keep them ABOVE
+
+# ✅ Let Astro pages work normally:
+# (No catch-all rewrite)
