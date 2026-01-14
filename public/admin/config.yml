@@ -4,7 +4,6 @@ backend:
   branch: main
   auth_type: implicit
   app_id: Ov23liP0Czu3COesrkXg
-  base_url: https://the-capstone-program.pages.dev
 
 site_url: https://the-capstone-program.pages.dev
 display_url: https://the-capstone-program.pages.dev
