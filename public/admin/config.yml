@@ -2,9 +2,7 @@ backend:
   name: github
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
-
-# ✅ Token auth mode (kills OAuth loop permanently)
-local_backend: false
+  auth_type: token
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
