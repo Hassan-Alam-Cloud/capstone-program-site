@@ -3,6 +3,8 @@ backend:
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
   oauth_endpoint: https://decap-cms-oauth.netlify.app/.netlify/functions/auth
+
+site_url: https://the-capstone-program.pages.dev
 display_url: https://the-capstone-program.pages.dev
 
 media_folder: "public/images/uploads"
