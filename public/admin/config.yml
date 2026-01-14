@@ -2,8 +2,8 @@ backend:
   name: github
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
-  base_url: https://decap-cms-oauth.netlify.app
-  auth_endpoint: /auth
+  auth_type: implicit
+  app_id: Ov23liP0Czu3COesrkXg
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
