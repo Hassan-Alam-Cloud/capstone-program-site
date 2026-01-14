@@ -1,12 +1,1 @@
-# =========================
-# Cloudflare Pages Redirects
-# =========================
 
-# ✅ 1) Make /admin work (if you still want Decap CMS)
-# If you DON'T want /admin at all, we can remove these later.
-/admin      /admin/index.html  200
-/admin/     /admin/index.html  200
-
-# ✅ 2) IMPORTANT:
-# Do NOT add a catch-all rewrite like: /* /index.html 200
-# That would force every route to your homepage
