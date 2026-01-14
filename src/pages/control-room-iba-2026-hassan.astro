@@ -1,5 +1,46 @@
 ---
 export const prerender = true;
+
+const links = [
+  {
+    title: "Updates",
+    desc: "Post announcements, schedule updates, and manage content.",
+    button: "Open Updates Folder",
+    href: "https://github.com/Hassan-Alam-Cloud/capstone-program-site/tree/main/src/content/updates",
+    accent: "blue",
+  },
+  {
+    title: "Mentors",
+    desc: "Add/edit mentors, bios, titles, and featured mentors.",
+    button: "Open Mentors Folder",
+    href: "https://github.com/Hassan-Alam-Cloud/capstone-program-site/tree/main/src/content/mentors",
+    accent: "green",
+  },
+  {
+    title: "Uploads",
+    desc: "Upload mentor images and website assets safely.",
+    button: "Open Uploads Folder",
+    href: "https://github.com/Hassan-Alam-Cloud/capstone-program-site/tree/main/public/images/uploads",
+    accent: "yellow",
+  },
+];
+
+const adminLinks = [
+  {
+    title: "Decap CMS (Admin)",
+    desc: "Open the CMS interface to edit site content easily.",
+    button: "Open Admin",
+    href: "/admin/",
+    accent: "purple",
+  },
+  {
+    title: "Access Policy (Cloudflare)",
+    desc: "Manage who can access the Control Room.",
+    button: "Open Zero Trust",
+    href: "https://dash.cloudflare.com/",
+    accent: "orange",
+  },
+];
 ---
 
 <!doctype html>
@@ -8,47 +49,336 @@ export const prerender = true;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Control Room | The Capstone Program</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <style>
+      :root{
+        --bg:#070b14;
+        --panel:#0b1220;
+        --panel2:#0e1730;
+        --text:#e5e7eb;
+        --muted:#94a3b8;
+        --line:rgba(255,255,255,.10);
+        --shadow: 0 18px 40px rgba(0,0,0,.55);
+
+        --blue:#3b82f6;
+        --green:#22c55e;
+        --yellow:#eab308;
+        --purple:#a855f7;
+        --orange:#f97316;
+      }
+
+      *{ box-sizing:border-box; }
+      body{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: radial-gradient(900px 500px at 30% 10%, rgba(59,130,246,.18), transparent 70%),
+                    radial-gradient(900px 500px at 70% 10%, rgba(168,85,247,.15), transparent 70%),
+                    var(--bg);
+        color:var(--text);
+      }
+
+      a{ color:inherit; text-decoration:none; }
+
+      .layout{
+        display:grid;
+        grid-template-columns: 280px 1fr;
+        min-height:100vh;
+      }
+
+      .sidebar{
+        position:sticky;
+        top:0;
+        height:100vh;
+        padding:22px;
+        border-right:1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 40%);
+      }
+
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:18px;
+        padding:12px 12px;
+        border:1px solid var(--line);
+        border-radius:16px;
+        background: rgba(255,255,255,.04);
+      }
+
+      .logo{
+        width:38px;
+        height:38px;
+        border-radius:12px;
+        background: linear-gradient(135deg, rgba(59,130,246,.9), rgba(168,85,247,.9));
+        box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      }
+
+      .brand h1{
+        font-size:13px;
+        margin:0;
+        letter-spacing:.6px;
+        text-transform:uppercase;
+        color:#cbd5e1;
+      }
+      .brand p{
+        margin:2px 0 0;
+        font-size:12px;
+        color:var(--muted);
+      }
+
+      .pill{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:12px 12px;
+        margin-top:12px;
+        border:1px solid var(--line);
+        border-radius:16px;
+        background: rgba(0,0,0,.22);
+      }
+      .dot{
+        width:10px;height:10px;border-radius:99px;background: var(--green);
+        box-shadow: 0 0 0 6px rgba(34,197,94,.14);
+      }
+      .pill strong{ font-size:12px; }
+      .pill span{ font-size:12px;color:var(--muted); }
+
+      .nav{
+        margin-top:16px;
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+      }
+      .nav a{
+        padding:12px 12px;
+        border-radius:14px;
+        border:1px solid transparent;
+        color:#cbd5e1;
+      }
+      .nav a:hover{
+        border-color:var(--line);
+        background: rgba(255,255,255,.04);
+      }
+
+      .content{
+        padding:26px 28px;
+      }
+
+      .topbar{
+        display:flex;
+        justify-content:space-between;
+        gap:16px;
+        align-items:center;
+        margin-bottom:18px;
+      }
+      .title h2{
+        margin:0;
+        font-size:28px;
+        letter-spacing:-.3px;
+      }
+      .title p{
+        margin:6px 0 0;
+        color:var(--muted);
+        font-size:13px;
+      }
+
+      .actions{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+      }
+      .smallbtn{
+        border:1px solid var(--line);
+        background: rgba(255,255,255,.04);
+        color:#e5e7eb;
+        padding:10px 12px;
+        border-radius:14px;
+        font-weight:700;
+        font-size:12px;
+      }
+      .smallbtn:hover{
+        background: rgba(255,255,255,.07);
+      }
+
+      .grid{
+        display:grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap:16px;
+      }
+
+      .card{
+        border:1px solid var(--line);
+        border-radius:18px;
+        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.18));
+        box-shadow: var(--shadow);
+        padding:16px;
+        overflow:hidden;
+      }
+
+      .cardHeader{
+        display:flex;
+        align-items:flex-start;
+        justify-content:space-between;
+        gap:10px;
+        margin-bottom:10px;
+      }
+
+      .badge{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        font-size:12px;
+        padding:8px 10px;
+        border-radius:999px;
+        border:1px solid var(--line);
+        color:#cbd5e1;
+        background: rgba(0,0,0,.25);
+      }
+
+      .card h3{
+        margin:0;
+        font-size:16px;
+      }
+      .card p{
+        margin:8px 0 14px;
+        color:var(--muted);
+        font-size:13px;
+        line-height:1.45;
+      }
+
+      .btn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        padding:11px 14px;
+        border-radius:14px;
+        font-weight:900;
+        font-size:12px;
+        border:1px solid transparent;
+      }
+
+      .btnBlue{ background: rgba(59,130,246,.15); border-color: rgba(59,130,246,.35); color:#dbeafe; }
+      .btnGreen{ background: rgba(34,197,94,.15); border-color: rgba(34,197,94,.35); color:#dcfce7; }
+      .btnYellow{ background: rgba(234,179,8,.15); border-color: rgba(234,179,8,.35); color:#fef9c3; }
+      .btnPurple{ background: rgba(168,85,247,.15); border-color: rgba(168,85,247,.35); color:#f3e8ff; }
+      .btnOrange{ background: rgba(249,115,22,.15); border-color: rgba(249,115,22,.35); color:#ffedd5; }
+
+      .btn:hover{ filter: brightness(1.08); }
+
+      .span4{ grid-column: span 4; }
+      .span6{ grid-column: span 6; }
+      .span12{ grid-column: span 12; }
+
+      .footerNote{
+        margin-top:18px;
+        color:rgba(148,163,184,.9);
+        font-size:12px;
+      }
+
+      @media (max-width: 980px){
+        .layout{ grid-template-columns: 1fr; }
+        .sidebar{ height:auto; position:relative; }
+        .span4, .span6{ grid-column: span 12; }
+      }
+    </style>
   </head>
 
-  <body style="margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#0b1220; color:#e5e7eb;">
-
-    <div style="max-width:1100px; margin:0 auto; padding:40px 20px;">
-      <h1 style="font-size:44px; margin:0 0 10px;">Capstone Control Room</h1>
-      <p style="margin:0 0 28px; color:#cbd5e1;">
-        If you see this page, Astro routing + deployment is correct.
-      </p>
-
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
-        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.10); border-radius:16px; padding:18px;">
-          <h2 style="margin:0 0 8px; font-size:18px;">Updates</h2>
-          <p style="margin:0 0 12px; color:#cbd5e1;">Manage announcements in GitHub.</p>
-          <a href="https://github.com/Hassan-Alam-Cloud/capstone-program-site/tree/main/src/content/updates"
-             target="_blank"
-             style="display:inline-block; padding:10px 14px; border-radius:12px; background:#3b82f6; color:white; text-decoration:none; font-weight:700;">
-            Open Updates Folder
-          </a>
+  <body>
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo"></div>
+          <div>
+            <h1>The Capstone Program</h1>
+            <p>Private Control Room</p>
+          </div>
         </div>
 
-        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.10); border-radius:16px; padding:18px;">
-          <h2 style="margin:0 0 8px; font-size:18px;">Mentors</h2>
-          <p style="margin:0 0 12px; color:#cbd5e1;">Add/edit mentors in GitHub.</p>
-          <a href="https://github.com/Hassan-Alam-Cloud/capstone-program-site/tree/main/src/content/mentors"
-             target="_blank"
-             style="display:inline-block; padding:10px 14px; border-radius:12px; background:#22c55e; color:#04110a; text-decoration:none; font-weight:800;">
-            Open Mentors Folder
-          </a>
+        <div class="pill">
+          <div class="dot"></div>
+          <div>
+            <strong>Status: Live</strong><br />
+            <span>Access Protected ✅</span>
+          </div>
         </div>
 
-        <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.10); border-radius:16px; padding:18px;">
-          <h2 style="margin:0 0 8px; font-size:18px;">Uploads</h2>
-          <p style="margin:0 0 12px; color:#cbd5e1;">Upload mentor images in GitHub.</p>
-          <a href="https://github.com/Hassan-Alam-Cloud/capstone-program-site/tree/main/public/images/uploads"
-             target="_blank"
-             style="display:inline-block; padding:10px 14px; border-radius:12px; background:#eab308; color:#111827; text-decoration:none; font-weight:800;">
-            Open Uploads Folder
-          </a>
+        <nav class="nav">
+          <a href="/">← Back to Website</a>
+          <a href="/updates/">Open Updates Page</a>
+          <a href="/mentors/">Open Mentors Page</a>
+          <a href="/apply/">Open Apply Page</a>
+          <a href="/contact/">Open Contact Page</a>
+        </nav>
+
+        <div class="footerNote">
+          Tip: If a page redirects wrongly, your <b>_redirects</b> file is the first thing to check.
         </div>
-      </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="content">
+        <div class="topbar">
+          <div class="title">
+            <h2>Capstone Control Room</h2>
+            <p>If you see this page, Astro routing + Cloudflare deployment are correct.</p>
+          </div>
+
+          <div class="actions">
+            <a class="smallbtn" href="https://github.com/Hassan-Alam-Cloud/capstone-program-site" target="_blank">GitHub Repo</a>
+            <a class="smallbtn" href="https://dash.cloudflare.com/" target="_blank">Cloudflare Dashboard</a>
+          </div>
+        </div>
+
+        <section class="grid">
+          <div class="card span12">
+            <span class="badge">✅ Verified: This is the real Control Room route</span>
+          </div>
+
+          {links.map((x) => (
+            <div class="card span4">
+              <div class="cardHeader">
+                <h3>{x.title}</h3>
+                <span class="badge">Quick Action</span>
+              </div>
+              <p>{x.desc}</p>
+              <a
+                class={`btn ${
+                  x.accent === "blue" ? "btnBlue" :
+                  x.accent === "green" ? "btnGreen" :
+                  "btnYellow"
+                }`}
+                href={x.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {x.button} →
+              </a>
+            </div>
+          ))}
+
+          {adminLinks.map((x) => (
+            <div class="card span6">
+              <div class="cardHeader">
+                <h3>{x.title}</h3>
+                <span class="badge">Admin</span>
+              </div>
+              <p>{x.desc}</p>
+              <a
+                class={`btn ${
+                  x.accent === "purple" ? "btnPurple" : "btnOrange"
+                }`}
+                href={x.href}
+                target={x.href.startsWith("http") ? "_blank" : undefined}
+                rel="noreferrer"
+              >
+                {x.button} →
+              </a>
+            </div>
+          ))}
+        </section>
+      </main>
     </div>
   </body>
 </html>
