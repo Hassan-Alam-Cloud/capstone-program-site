@@ -1,1 +1,20 @@
+backend:
+  name: github
+  repo: Hassan-Alam-Cloud/capstone-program-site
+  branch: main
+  auth_type: implicit
+  app_id: YOUR_CLIENT_ID
 
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "updates"
+    label: "Updates"
+    folder: "src/content/updates"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
