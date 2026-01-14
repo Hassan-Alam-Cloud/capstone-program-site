@@ -2,8 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Admin | The Capstone Program</title>
+
+    <!-- ✅ THIS LINE IS THE FIX -->
+    <link rel="cms-config-url" href="/admin/config.yml" />
+
+    <!-- ✅ Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
     <style>
       body {
@@ -13,8 +19,5 @@
     </style>
   </head>
 
-  <body>
-    <!-- Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  </body>
+  <body></body>
 </html>
