@@ -1,102 +1,89 @@
 ---
+export const prerender = true;
+
 const repo = "Hassan-Alam-Cloud/capstone-program-site";
+const branch = "main";
 
-// GitHub edit links (direct to folders)
-const githubMentors =
-  `https://github.com/${repo}/tree/main/src/content/mentors`;
+// ✅ GitHub folder links
+const githubMentors = `https://github.com/${repo}/tree/${branch}/src/content/mentors`;
+const githubUpdates = `https://github.com/${repo}/tree/${branch}/src/content/updates`;
+const githubFaqs = `https://github.com/${repo}/tree/${branch}/src/content/faq`;
+const githubUploads = `https://github.com/${repo}/tree/${branch}/public/images/uploads`;
 
-const githubUpdates =
-  `https://github.com/${repo}/tree/main/src/content/updates`;
+// ✅ Create new files directly (super clean)
+const githubNewMentor =
+  `https://github.com/${repo}/new/${branch}/src/content/mentors?filename=new-mentor.md`;
 
-const githubUploads =
-  `https://github.com/${repo}/tree/main/public/images/uploads`;
+const githubNewUpdate =
+  `https://github.com/${repo}/new/${branch}/src/content/updates?filename=new-update.md`;
 
-const githubRepoHome =
-  `https://github.com/${repo}`;
+// ✅ Safety links
+const githubRepoSettings = `https://github.com/${repo}/settings`;
+const githubPages = `https://dash.cloudflare.com/`;
 ---
 
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Capstone Control Room</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Control Room | The Capstone Program</title>
 
     <style>
       :root {
-        --bg: #070a12;
+        --bg: #0b1220;
         --card: rgba(255, 255, 255, 0.06);
         --card2: rgba(255, 255, 255, 0.04);
         --stroke: rgba(255, 255, 255, 0.12);
         --text: rgba(255, 255, 255, 0.92);
-        --muted: rgba(255, 255, 255, 0.70);
-        --muted2: rgba(255, 255, 255, 0.55);
-        --accent: #7c5cff;
-        --accent2: #2fd6c3;
-        --danger: #ff4d6d;
-        --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
-        --radius: 18px;
+        --muted: rgba(255, 255, 255, 0.60);
+        --blue: #3b82f6;
+        --green: #22c55e;
+        --yellow: #facc15;
       }
-
-      * { box-sizing: border-box; }
-      html, body { height: 100%; }
 
       body {
         margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-        background: radial-gradient(1200px 600px at 15% 10%, rgba(124, 92, 255, 0.22), transparent 60%),
-          radial-gradient(1200px 600px at 90% 25%, rgba(47, 214, 195, 0.16), transparent 60%),
-          radial-gradient(800px 500px at 50% 85%, rgba(255, 77, 109, 0.10), transparent 70%),
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        background: radial-gradient(900px 600px at 10% 10%, rgba(59, 130, 246, 0.22), transparent),
+          radial-gradient(700px 500px at 70% 20%, rgba(34, 197, 94, 0.12), transparent),
           var(--bg);
         color: var(--text);
       }
 
       .wrap {
         max-width: 1100px;
-        margin: 0 auto;
-        padding: 36px 18px 80px;
+        margin: 48px auto;
+        padding: 0 20px;
       }
 
       .top {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         gap: 18px;
-        flex-wrap: wrap;
-        margin-bottom: 22px;
+        margin-bottom: 24px;
       }
 
-      .brand {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .brand h1 {
+      .title {
         margin: 0;
-        font-size: 28px;
+        font-size: 34px;
         letter-spacing: -0.02em;
       }
 
-      .brand p {
-        margin: 0;
-        max-width: 680px;
+      .sub {
+        margin: 6px 0 0 0;
         color: var(--muted);
-        line-height: 1.55;
         font-size: 14px;
       }
 
       .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 12px;
-        border: 1px solid var(--stroke);
+        padding: 10px 14px;
+        background: rgba(34, 197, 94, 0.13);
+        border: 1px solid rgba(34, 197, 94, 0.25);
         border-radius: 999px;
-        background: rgba(255,255,255,0.04);
-        color: var(--muted);
         font-size: 13px;
+        color: rgba(255, 255, 255, 0.92);
+        white-space: nowrap;
       }
 
       .grid {
@@ -106,32 +93,23 @@ const githubRepoHome =
       }
 
       .card {
-        border: 1px solid var(--stroke);
-        border-radius: var(--radius);
         background: linear-gradient(180deg, var(--card), var(--card2));
-        box-shadow: var(--shadow);
+        border: 1px solid var(--stroke);
+        border-radius: 16px;
         padding: 18px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
       }
 
       .card h2 {
-        margin: 0 0 8px 0;
-        font-size: 16px;
-        letter-spacing: -0.01em;
+        margin: 0 0 6px 0;
+        font-size: 18px;
       }
 
       .card p {
         margin: 0 0 14px 0;
         color: var(--muted);
-        line-height: 1.55;
         font-size: 13px;
-      }
-
-      .col-7 { grid-column: span 7; }
-      .col-5 { grid-column: span 5; }
-      .col-12 { grid-column: span 12; }
-
-      @media (max-width: 900px) {
-        .col-7, .col-5 { grid-column: span 12; }
+        line-height: 1.45;
       }
 
       .btns {
@@ -140,86 +118,55 @@ const githubRepoHome =
         gap: 10px;
       }
 
-      a.btn {
+      .btn {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
         gap: 10px;
-        padding: 12px 14px;
-        border-radius: 14px;
-        border: 1px solid var(--stroke);
+        padding: 10px 12px;
+        border-radius: 12px;
         text-decoration: none;
-        color: var(--text);
-        font-size: 14px;
-        background: rgba(255,255,255,0.05);
-        transition: transform 120ms ease, border 120ms ease, background 120ms ease;
-      }
-
-      a.btn:hover {
-        transform: translateY(-1px);
-        border-color: rgba(255,255,255,0.22);
-        background: rgba(255,255,255,0.08);
-      }
-
-      a.btn.primary {
-        border-color: rgba(124, 92, 255, 0.55);
-        background: rgba(124, 92, 255, 0.12);
-      }
-
-      a.btn.primary:hover {
-        background: rgba(124, 92, 255, 0.18);
-        border-color: rgba(124, 92, 255, 0.75);
-      }
-
-      a.btn.good {
-        border-color: rgba(47, 214, 195, 0.55);
-        background: rgba(47, 214, 195, 0.10);
-      }
-
-      a.btn.good:hover {
-        background: rgba(47, 214, 195, 0.15);
-        border-color: rgba(47, 214, 195, 0.75);
-      }
-
-      a.btn.danger {
-        border-color: rgba(255, 77, 109, 0.55);
-        background: rgba(255, 77, 109, 0.10);
-      }
-
-      a.btn.danger:hover {
-        background: rgba(255, 77, 109, 0.14);
-        border-color: rgba(255, 77, 109, 0.75);
-      }
-
-      .small {
-        font-size: 12px;
-        color: var(--muted2);
-        line-height: 1.6;
-      }
-
-      ol {
-        margin: 0;
-        padding-left: 18px;
-        color: var(--muted);
+        color: white;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.06);
         font-size: 13px;
-        line-height: 1.7;
+        transition: transform 0.08s ease, background 0.2s ease;
       }
 
-      code {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          "Liberation Mono", "Courier New", monospace;
-        font-size: 12px;
-        color: rgba(255,255,255,0.90);
-        background: rgba(255,255,255,0.08);
-        padding: 2px 6px;
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.12);
+      .btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.10);
       }
+
+      .primary {
+        border-color: rgba(59, 130, 246, 0.38);
+        background: rgba(59, 130, 246, 0.16);
+      }
+
+      .good {
+        border-color: rgba(34, 197, 94, 0.40);
+        background: rgba(34, 197, 94, 0.14);
+      }
+
+      .warn {
+        border-color: rgba(250, 204, 21, 0.45);
+        background: rgba(250, 204, 21, 0.12);
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .col-7 { grid-column: span 7; }
+      .col-5 { grid-column: span 5; }
+      .col-6 { grid-column: span 6; }
+      .col-12 { grid-column: span 12; }
 
       .footer {
-        margin-top: 18px;
-        color: var(--muted2);
+        margin-top: 22px;
         font-size: 12px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      @media (max-width: 900px) {
+        .col-7, .col-5, .col-6 { grid-column: span 12; }
+        .top { flex-direction: column; align-items: flex-start; }
       }
     </style>
   </head>
@@ -227,81 +174,119 @@ const githubRepoHome =
   <body>
     <div class="wrap">
       <div class="top">
-        <div class="brand">
-          <h1>Capstone Control Room</h1>
-          <p>
-            Private admin dashboard for The Capstone Program.
-            This is protected by Cloudflare Access — only you should reach this page.
+        <div>
+          <h1 class="title">Control Room — The Capstone Program</h1>
+          <p class="sub">
+            Hidden admin dashboard. Edit content using GitHub (stable & free).
           </p>
         </div>
 
-        <div class="pill">
-          ✅ Status: Live • Access Protected
-        </div>
+        <div class="pill">✅ Status: Live • Access Protected</div>
       </div>
 
       <div class="grid">
+        <!-- ✅ Quick Actions -->
         <section class="card col-7">
           <h2>Quick Actions (No Coding)</h2>
-          <p>These open the exact folders you need in GitHub. Just edit files and commit.</p>
+          <p>These open the exact folders you need in GitHub.</p>
+
           <div class="btns">
             <a class="btn primary" href={githubMentors} target="_blank" rel="noreferrer">
               👤 Mentors content
             </a>
+
             <a class="btn primary" href={githubUpdates} target="_blank" rel="noreferrer">
               📢 Updates content
             </a>
+
             <a class="btn good" href={githubUploads} target="_blank" rel="noreferrer">
               🖼 Upload images
             </a>
-            <a class="btn" href={githubRepoHome} target="_blank" rel="noreferrer">
-              🧠 Open repo
+
+            <a class="btn primary" href={githubFaqs} target="_blank" rel="noreferrer">
+              ❓ FAQs content
+            </a>
+
+            <a class="btn good" href={githubNewMentor} target="_blank" rel="noreferrer">
+              ➕ Create Mentor (New)
+            </a>
+
+            <a class="btn good" href={githubNewUpdate} target="_blank" rel="noreferrer">
+              ➕ Create Update (New)
             </a>
           </div>
-
-          <p class="footer">
-            Tip: uploads go in <code>public/images/uploads</code>
-          </p>
         </section>
 
+        <!-- ✅ Mentors -->
         <section class="card col-5">
-          <h2>Live Site Links</h2>
-          <p>Use these to verify everything is showing correctly.</p>
+          <h2>Mentors</h2>
+          <p>Add new mentors or update bios, tags, LinkedIn etc.</p>
+
           <div class="btns">
-            <a class="btn" href="https://the-capstone-program.pages.dev" target="_blank" rel="noreferrer">
-              🌐 Main Website
+            <a class="btn good" href={githubNewMentor} target="_blank" rel="noreferrer">
+              ➕ Add New Mentor
             </a>
-            <a class="btn" href="https://the-capstone-program.pages.dev/mentors" target="_blank" rel="noreferrer">
-              👥 Mentors Page
-            </a>
-            <a class="btn" href="https://the-capstone-program.pages.dev/updates" target="_blank" rel="noreferrer">
-              📰 Updates Page
-            </a>
-            <a class="btn danger" href="https://the-capstone-program.pages.dev/apply" target="_blank" rel="noreferrer">
-              🧾 Apply Page
+
+            <a class="btn primary" href={githubMentors} target="_blank" rel="noreferrer">
+              📁 Manage Mentors
             </a>
           </div>
-          <p class="small" style="margin-top: 12px;">
-            If updates do not show immediately, wait 30–90 seconds for Cloudflare deploy.
-          </p>
         </section>
 
+        <!-- ✅ Updates -->
+        <section class="card col-6">
+          <h2>Updates / Announcements</h2>
+          <p>Add new announcements and edit existing posts.</p>
+
+          <div class="btns">
+            <a class="btn good" href={githubNewUpdate} target="_blank" rel="noreferrer">
+              ➕ Add New Update
+            </a>
+
+            <a class="btn primary" href={githubUpdates} target="_blank" rel="noreferrer">
+              📁 Manage Updates
+            </a>
+          </div>
+        </section>
+
+        <!-- ✅ Image Upload -->
+        <section class="card col-6">
+          <h2>Images Uploads</h2>
+          <p>Upload mentor images and program assets (no CMS upload needed).</p>
+
+          <div class="btns">
+            <a class="btn good" href={githubUploads} target="_blank" rel="noreferrer">
+              ⬆ Upload Images
+            </a>
+
+            <a class="btn primary" href={githubUploads} target="_blank" rel="noreferrer">
+              📁 View Uploads Folder
+            </a>
+          </div>
+        </section>
+
+        <!-- ✅ Safety -->
         <section class="card col-12">
-          <h2>How to Update (Fast Workflow)</h2>
-          <p>This is the workflow you’ll use forever.</p>
-
-          <ol>
-            <li>Open <b>Mentors content</b> or <b>Updates content</b>.</li>
-            <li>Create or edit a markdown file (example: <code>saad-bhai.md</code>).</li>
-            <li>Click <b>Commit changes</b> in GitHub.</li>
-            <li>Wait for Cloudflare deploy (usually 30 seconds).</li>
-            <li>Refresh your live pages.</li>
-          </ol>
-
-          <p class="small" style="margin-top: 12px;">
-            ✅ This avoids OAuth, avoids Decap loops, avoids rate limits, and stays fully free.
+          <h2>Safety</h2>
+          <p>
+            This page is hidden but NOT “secure”. Don’t share the URL publicly.
+            If you want real security, we can add Cloudflare Access.
           </p>
+
+          <div class="btns">
+            <a class="btn warn" href={githubRepoSettings} target="_blank" rel="noreferrer">
+              🔒 Repo Settings
+            </a>
+
+            <a class="btn warn" href={githubPages} target="_blank" rel="noreferrer">
+              ☁ Cloudflare Dashboard
+            </a>
+          </div>
         </section>
+      </div>
+
+      <div class="footer">
+        Admin URL: /control-room-iba-2026-hassan
       </div>
     </div>
   </body>
