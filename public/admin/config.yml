@@ -2,7 +2,10 @@ backend:
   name: github
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
-  oauth_endpoint: https://decap-cms-oauth.netlify.app/.netlify/functions/auth
+
+  # ✅ THIS is the important part (external OAuth, not Netlify)
+  base_url: https://decap-cms-oauth.netlify.app
+  auth_endpoint: /auth
 
 site_url: https://the-capstone-program.pages.dev
 display_url: https://the-capstone-program.pages.dev
