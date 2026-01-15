@@ -2,10 +2,8 @@ backend:
   name: github
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
-
-  # ✅ External OAuth service (so Cloudflare Pages can login)
-  base_url: https://decap-cms-oauth.netlify.app
-  auth_endpoint: /auth
+  auth_type: implicit
+  app_id: Ov23liP0Czu3COesrkXg
 
 site_url: https://the-capstone-program.pages.dev
 display_url: https://the-capstone-program.pages.dev
