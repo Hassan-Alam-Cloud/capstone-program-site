@@ -3,7 +3,7 @@ backend:
   repo: Hassan-Alam-Cloud/capstone-program-site
   branch: main
 
-  # ✅ THIS is the important part (external OAuth, not Netlify)
+  # ✅ External OAuth service (so Cloudflare Pages can login)
   base_url: https://decap-cms-oauth.netlify.app
   auth_endpoint: /auth
 
